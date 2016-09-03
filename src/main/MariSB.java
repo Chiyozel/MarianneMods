@@ -7,6 +7,7 @@ package main;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
@@ -104,6 +105,7 @@ public class MariSB extends MapUtils implements FolderUtils {
         int type, start, end;
         String out="";
 
+        sc.useLocale(Locale.US);
         filePath = f.getAbsolutePath();
 
         System.out.println("Do you want to scan this file? (y/n) ");

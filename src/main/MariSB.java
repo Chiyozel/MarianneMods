@@ -5,8 +5,12 @@
  */
 package main;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -23,6 +27,9 @@ import mods.Mods;
  */
 public class MariSB extends MapUtils implements FolderUtils {
 
+    public int X;
+    public int Y;
+
     public MariSB() {
 
         Scanner sc = new Scanner(System.in);
@@ -30,14 +37,46 @@ public class MariSB extends MapUtils implements FolderUtils {
         this.isNewFile = false;
 
         folder = new File("./osuMaps/");
-        boolean created = FolderUtils.checkForFolder(folder);
+        settings = new File("./settings.ini");
+
+        boolean created = FolderUtils.checkForFolder(folder) && FolderUtils.checkForFile(settings);
         if (created) {
+            this.createSettings(settings);
+            System.out.println("Directory ./osuMaps/ and settings file created.\n"
+                    + "Place all the files in the folder and restart the program.\n");
             closeProgram();
         }
 
         CopyOnWriteArrayList<File> files = FolderUtils.listFiles(new File("./osuMaps/"));
         if (f != null) {
             files.add(f);
+        }
+
+        try {
+            InputStream i = new FileInputStream(settings);
+            InputStreamReader r = new InputStreamReader(i);
+            BufferedReader br = new BufferedReader(r);
+            String l, k, v;
+            String temp[];
+
+            while ((l = br.readLine()) != null) {
+                if (!l.startsWith("//")) {
+                    temp = l.split("=");
+                    k = temp[0];
+                    v = temp[1];
+                    switch (k) {
+                        case "X":
+                            X = Integer.parseInt(v);
+                            break;
+                        case "Y":
+                            Y = Integer.parseInt(v);
+                            break;
+                        default:
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         newChart = new File("./SB.osb");
@@ -103,14 +142,14 @@ public class MariSB extends MapUtils implements FolderUtils {
     private void taikoModification(File file, Scanner sc) {
         f = file;
         int type, start, end;
-        String out="";
+        String out = "";
 
         sc.useLocale(Locale.US);
         filePath = f.getAbsolutePath();
 
         System.out.println("Do you want to scan this file? (y/n) ");
         if (sc.next().equalsIgnoreCase("y")) {
-            
+
             listNotes();
 
             System.out.println("Starting point of the SB Mod:");
@@ -154,31 +193,31 @@ public class MariSB extends MapUtils implements FolderUtils {
 
             switch (type) {
                 case 1:
-                    out = Mods.counter(notes);
+                    out = Mods.counter(notes, X, Y);
                     break;
                 case 2:
-                    out = Mods.counterReverse(notes);
+                    out = Mods.counterReverse(notes, X, Y);
                     break;
                 case 3:
-                    out = Mods.counterMirror(notes);
+                    out = Mods.counterMirror(notes, X, Y);
                     break;
                 case 4:
-                    out = Mods.doubleScroll(notes);
+                    out = Mods.doubleScroll(notes, X, Y);
                     break;
                 case 5:
-                    out = Mods.gravity(notes);
+                    out = Mods.gravity(notes, X, Y);
                     break;
                 case 6:
-                    out = Mods.abekobe(notes);
+                    out = Mods.abekobe(notes, X, Y);
                     break;
                 case 7:
-                    out = Mods.abekobeReverse(notes);
+                    out = Mods.abekobeReverse(notes, X, Y);
                     break;
                 case 8:
-                    out = Mods.reverseScroll(notes);
+                    out = Mods.reverseScroll(notes, X, Y);
                     break;
                 case 9:
-                    out = Mods.splitScroll(notes);
+                    out = Mods.splitScroll(notes, X, Y);
                     break;
                 case 10:
                     System.out.println("------------\nAt which speed do you want it to go?");
@@ -186,22 +225,22 @@ public class MariSB extends MapUtils implements FolderUtils {
                     if (speed <= 0) {
                         speed = 1.;
                     }
-                    out = Mods.scroll(notes, speed);
+                    out = Mods.scroll(notes, speed, X, Y);
                     break;
                 case 11:
-                    out = Mods.upsideDownAbek(notes);
+                    out = Mods.upsideDownAbek(notes, X, Y);
                     break;
                 case 12:
-                    out = Mods.boost(notes);
+                    out = Mods.boost(notes, X, Y);
                     break;
                 case 13:
-                    out = Mods.counterUpside(notes);
+                    out = Mods.counterUpside(notes, X, Y);
                     break;
                 case 14:
-                    out = Mods.upsideDown(notes);
+                    out = Mods.upsideDown(notes, X, Y);
                     break;
                 case 15:
-                    out = Mods.starMode(notes);
+                    out = Mods.starMode(notes, X, Y);
                     break;
                 default:
                     System.out.println("Wrong choice.");

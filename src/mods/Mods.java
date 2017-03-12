@@ -15,160 +15,229 @@ import utils.Note;
  */
 public class Mods {
 
-    public static String reverseScroll(List<Note> list) {
+    public static String reverseScroll(List<Note> list, int X, int Y) {
         int noteCount = list.size();
         String a = "";
         for (int i = 0; i < noteCount; i++) {
             Note n = list.get(i);
             int hs = n.getHitsound();
             a += "Sprite,Foreground,Centre,\"SB/note.png\",320,240\r\n ";
-            a += "M,0," + (n.getMillis() - (int) (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",-180,370,170,370\r\n ";
-            a += "S,0," + n.getMillis() + ",,0.35\r\n";
-            if (((hs >> 1) & 1) == 1 || ((hs >> 3) & 1) == 1) {
-                a += " C,0," + n.getMillis() + ",,100,160,255\r\n";
+            a += "M,0," + (n.getMillis() - (int) (int) ((60000 / 191) * 4)) + "," + n.getMillis() + "," + (350 - X) + "," + Y + "," + X + "," + Y + "\r\n ";
+
+            if (((hs >> 2) & 1) == 0) {
+                a += "S,0," + n.getMillis() + ",,0.35\r\n ";
             } else {
-                a += " C,0," + n.getMillis() + ",,255,80,80\r\n";
+                a += "S,0," + n.getMillis() + ",,0.5\r\n ";
             }
-            a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
-            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",-180,370,170,370\r\n ";
-            a += "S,0," + n.getMillis() + ",,0.35\r\n";
+
+            if (((hs >> 1) & 1) == 1 || ((hs >> 3) & 1) == 1) {
+                a += "C,0," + n.getMillis() + ",,100,160,255\r\n";
+            } else {
+                a += "C,0," + n.getMillis() + ",,255,80,80\r\n";
+            }
+
+            if (((hs >> 2) & 1) == 0) {
+                a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
+                a += "S,0," + n.getMillis() + ",,0.35\r\n ";
+            } else {
+                a += "Sprite,Foreground,Centre,\"SB/notebig-overlay.png\",320,240\r\n ";
+                a += "S,0," + n.getMillis() + ",,0.5\r\n ";
+            }
+            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + "," + (350 - X) + "," + Y + "," + X + "," + Y + "\r\n";
         }
         return a;
     }
 
-    public static String upsideDownAbek(List<Note> list) {
+    public static String upsideDownAbek(List<Note> list, int X, int Y) {
         int noteCount = list.size();
         String a = "";
         for (int i = 0; i < noteCount; i++) {
             Note n = list.get(i);
             int hs = n.getHitsound();
             a += "Sprite,Foreground,Centre,\"SB/note.png\",320,240\r\n ";
-            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",800,90,170,90\r\n ";
-            a += "S,0," + n.getMillis() + ",,0.35\r\n ";
-            a += "R,0," + n.getMillis() + ",,3.14159265359\r\n";
-            if (((hs >> 1) & 1) == 1 || ((hs >> 3) & 1) == 1) {
-                a += " C,0," + n.getMillis() + ",,255,80,80\r\n";
+            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + "," + (X + 630) + "," + (Y - 280) + "," + X + "," + (Y - 280) + "\r\n ";
+            if (((hs >> 2) & 1) == 0) {
+                a += "S,0," + n.getMillis() + ",,0.35\r\n ";
             } else {
-                a += " C,0," + n.getMillis() + ",,100,160,255\r\n";
+                a += "S,0," + n.getMillis() + ",,0.5\r\n ";
             }
-            a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
-            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",800,90,170,90\r\n ";
-            a += "S,0," + n.getMillis() + ",,0.35\r\n ";
-            a += "R,0," + n.getMillis() + ",,3.14159265359\r\n";
-        }
-        return a;
-    }
-
-    public static String upsideDown(List<Note> list) {
-        int noteCount = list.size();
-        String a = "";
-        for (int i = 0; i < noteCount; i++) {
-            Note n = list.get(i);
-            int hs = n.getHitsound();
-            a += "Sprite,Foreground,Centre,\"SB/note.png\",320,240\r\n ";
-            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",800,90,170,90\r\n ";
-            a += "S,0," + n.getMillis() + ",,0.35\r\n ";
             a += "R,0," + n.getMillis() + ",,3.14159265359\r\n ";
             if (((hs >> 1) & 1) == 1 || ((hs >> 3) & 1) == 1) {
-                a += " C,0," + n.getMillis() + ",,100,160,255\r\n";
+                a += "C,0," + n.getMillis() + ",,255,80,80\r\n";
             } else {
-                a += " C,0," + n.getMillis() + ",,255,80,80\r\n";
+                a += "C,0," + n.getMillis() + ",,100,160,255\r\n";
             }
-            a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
-            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",800,90,170,90\r\n ";
-            a += "S,0," + n.getMillis() + ",,0.35\r\n ";
+
+            if (((hs >> 2) & 1) == 0) {
+                a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
+                a += "S,0," + n.getMillis() + ",,0.35\r\n ";
+            } else {
+                a += "Sprite,Foreground,Centre,\"SB/notebig-overlay.png\",320,240\r\n ";
+                a += "S,0," + n.getMillis() + ",,0.5\r\n ";
+            }
+            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + "," + (X + 630) + "," + (Y - 280) + "," + X + "," + (Y - 280) + "\r\n ";
+            a += "R,0," + n.getMillis() + ",,3.14159265359\r\n";
+        }
+        return a;
+    }
+
+    public static String upsideDown(List<Note> list, int X, int Y) {
+        int noteCount = list.size();
+        String a = "";
+        for (int i = 0; i < noteCount; i++) {
+            Note n = list.get(i);
+            int hs = n.getHitsound();
+            a += "Sprite,Foreground,Centre,\"SB/note.png\",320,240\r\n ";
+            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + "," + (X + 630) + "," + (480 - Y) + "," + X + "," + (480 - Y) + "\r\n ";
+            if (((hs >> 2) & 1) == 0) {
+                a += "S,0," + n.getMillis() + ",,0.35\r\n ";
+            } else {
+                a += "S,0," + n.getMillis() + ",,0.5\r\n ";
+            }
             a += "R,0," + n.getMillis() + ",,3.14159265359\r\n ";
+            if (((hs >> 1) & 1) == 1 || ((hs >> 3) & 1) == 1) {
+                a += "C,0," + n.getMillis() + ",,100,160,255\r\n";
+            } else {
+                a += "C,0," + n.getMillis() + ",,255,80,80\r\n";
+            }
+
+            if (((hs >> 2) & 1) == 0) {
+                a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
+                a += "S,0," + n.getMillis() + ",,0.35\r\n ";
+            } else {
+                a += "Sprite,Foreground,Centre,\"SB/notebig-overlay.png\",320,240\r\n ";
+                a += "S,0," + n.getMillis() + ",,0.5\r\n ";
+            }
+            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + "," + (X + 630) + "," + (480 - Y) + "," + X + "," + (480 - Y) + "\r\n ";
+            a += "R,0," + n.getMillis() + ",,3.14159265359\r\n";
         }
         return a;
     }
 
-    public static String gravity(List<Note> list) {
+    public static String gravity(List<Note> list, int X, int Y) {
         int noteCount = list.size();
         String a = "";
         for (int i = 0; i < noteCount; i++) {
             Note n = list.get(i);
             int hs = n.getHitsound();
             a += "Sprite,Foreground,Centre,\"SB/note.png\",320,240\r\n ";
-            a += "M,1," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",800,370,170,370\r\n ";
-            a += "S,0," + n.getMillis() + ",,0.35\r\n";
-            if (((hs >> 1) & 1) == 1 || ((hs >> 3) & 1) == 1) {
-                a += " C,0," + n.getMillis() + ",,100,160,255\r\n";
+            a += "M,1," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + "," + (X + 630) + "," + Y + "," + X + "," + Y + "\r\n ";
+            if (((hs >> 2) & 1) == 0) {
+                a += "S,0," + n.getMillis() + ",,0.35\r\n ";
             } else {
-                a += " C,0," + n.getMillis() + ",,255,80,80\r\n";
+                a += "S,0," + n.getMillis() + ",,0.5\r\n ";
             }
-            a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
-            a += "M,1," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",800,370,170,370\r\n ";
-            a += "S,0," + n.getMillis() + ",,0.35\r\n";
+            if (((hs >> 1) & 1) == 1 || ((hs >> 3) & 1) == 1) {
+                a += "C,0," + n.getMillis() + ",,100,160,255\r\n";
+            } else {
+                a += "C,0," + n.getMillis() + ",,255,80,80\r\n";
+            }
+
+            if (((hs >> 2) & 1) == 0) {
+                a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
+                a += "S,0," + n.getMillis() + ",,0.35\r\n ";
+            } else {
+                a += "Sprite,Foreground,Centre,\"SB/notebig-overlay.png\",320,240\r\n ";
+                a += "S,0," + n.getMillis() + ",,0.5\r\n ";
+            }
+            a += "M,1," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + "," + (X + 630) + "," + Y + "," + X + "," + Y + "\r\n";
         }
         return a;
     }
 
-    public static String boost(List<Note> list) {
+    public static String boost(List<Note> list, int X, int Y) {
         int noteCount = list.size();
         String a = "";
         for (int i = 0; i < noteCount; i++) {
             Note n = list.get(i);
             int hs = n.getHitsound();
             a += "Sprite,Foreground,Centre,\"SB/note.png\",320,240\r\n ";
-            a += "M,2," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",800,370,170,370\r\n ";
-            a += "S,0," + n.getMillis() + ",,0.35\r\n";
-            if (((hs >> 1) & 1) == 1 || ((hs >> 3) & 1) == 1) {
-                a += " C,0," + n.getMillis() + ",,100,160,255\r\n";
+            a += "M,2," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + "," + (X + 630) + "," + Y + "," + X + "," + Y + "\r\n ";
+            if (((hs >> 2) & 1) == 0) {
+                a += "S,0," + n.getMillis() + ",,0.35\r\n ";
             } else {
-                a += " C,0," + n.getMillis() + ",,255,80,80\r\n";
+                a += "S,0," + n.getMillis() + ",,0.5\r\n ";
             }
-            a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
-            a += "M,2," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",800,370,170,370\r\n ";
-            a += "S,0," + n.getMillis() + ",,0.35\r\n";
+            if (((hs >> 1) & 1) == 1 || ((hs >> 3) & 1) == 1) {
+                a += "C,0," + n.getMillis() + ",,100,160,255\r\n";
+            } else {
+                a += "C,0," + n.getMillis() + ",,255,80,80\r\n";
+            }
+
+            if (((hs >> 2) & 1) == 0) {
+                a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
+                a += "S,0," + n.getMillis() + ",,0.35\r\n ";
+            } else {
+                a += "Sprite,Foreground,Centre,\"SB/notebig-overlay.png\",320,240\r\n ";
+                a += "S,0," + n.getMillis() + ",,0.5\r\n ";
+            }
+            a += "M,2," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + "," + (X + 630) + "," + Y + "," + X + "," + Y + "\r\n";
         }
         return a;
     }
 
-    public static String abekobe(List<Note> list) {
+    public static String abekobe(List<Note> list, int X, int Y) {
         int noteCount = list.size();
         String a = "";
         for (int i = 0; i < noteCount; i++) {
             Note n = list.get(i);
             int hs = n.getHitsound();
             a += "Sprite,Foreground,Centre,\"SB/note.png\",320,240\r\n ";
-            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",800,370,170,370\r\n ";
-            a += "S,0," + n.getMillis() + ",,0.35\r\n ";
-            a += "F,0,275000,276338,1\r\n F,0,276338,,0\r\n";
-            if (((hs >> 1) & 1) == 1 || ((hs >> 3) & 1) == 1) {
-                a += " C,0," + n.getMillis() + ",,255,80,80\r\n";
+            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + "," + (X + 630) + "," + Y + "," + X + "," + Y + "\r\n ";
+            if (((hs >> 2) & 1) == 0) {
+                a += "S,0," + n.getMillis() + ",,0.35\r\n ";
             } else {
-                a += " C,0," + n.getMillis() + ",,100,160,255\r\n";
+                a += "S,0," + n.getMillis() + ",,0.5\r\n ";
             }
-            a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
-            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",800,370,170,370\r\n ";
-            a += "S,0," + n.getMillis() + ",,0.35\r\n ";
-            a += "F,0,275000,276338,1\r\n F,0,276338,,0\r\n";
+            a += "F,0,275000,276338,1\r\n F,0,276338,,0\r\n ";
+            if (((hs >> 1) & 1) == 1 || ((hs >> 3) & 1) == 1) {
+                a += "C,0," + n.getMillis() + ",,255,80,80\r\n";
+            } else {
+                a += "C,0," + n.getMillis() + ",,100,160,255\r\n";
+            }
+            if (((hs >> 2) & 1) == 0) {
+                a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
+                a += "S,0," + n.getMillis() + ",,0.35\r\n ";
+            } else {
+                a += "Sprite,Foreground,Centre,\"SB/notebig-overlay.png\",320,240\r\n ";
+                a += "S,0," + n.getMillis() + ",,0.5\r\n ";
+            }
+            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + "," + (X + 630) + "," + Y + "," + X + "," + Y + "\r\n";
         }
         return a;
     }
 
-    public static String abekobeReverse(List<Note> list) {
+    public static String abekobeReverse(List<Note> list, int X, int Y) {
         int noteCount = list.size();
         String a = "";
         for (int i = 0; i < noteCount; i++) {
             Note n = list.get(i);
             int hs = n.getHitsound();
             a += "Sprite,Foreground,Centre,\"SB/note.png\",320,240\r\n ";
-            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",-160,370,470,370\r\n ";
-            a += "S,0," + n.getMillis() + ",,0.35\r\n";
-            if (((hs >> 1) & 1) == 1 || ((hs >> 3) & 1) == 1) {
-                a += " C,0," + n.getMillis() + ",,255,80,80\r\n";
+            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + "," + (10 - X) + "," + Y + "," + (640 - X) + "," + Y + "\r\n ";
+            if (((hs >> 2) & 1) == 0) {
+                a += "S,0," + n.getMillis() + ",,0.35\r\n ";
             } else {
-                a += " C,0," + n.getMillis() + ",,100,160,255\r\n";
+                a += "S,0," + n.getMillis() + ",,0.5\r\n ";
             }
-            a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
-            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",-160,370,470,370\r\n ";
-            a += "S,0," + n.getMillis() + ",,0.35\r\n";
+            if (((hs >> 1) & 1) == 1 || ((hs >> 3) & 1) == 1) {
+                a += "C,0," + n.getMillis() + ",,255,80,80\r\n";
+            } else {
+                a += "C,0," + n.getMillis() + ",,100,160,255\r\n";
+            }
+            if (((hs >> 2) & 1) == 0) {
+                a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
+                a += "S,0," + n.getMillis() + ",,0.35\r\n ";
+            } else {
+                a += "Sprite,Foreground,Centre,\"SB/notebig-overlay.png\",320,240\r\n ";
+                a += "S,0," + n.getMillis() + ",,0.5\r\n ";
+            }
+            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + "," + (10 - X) + "," + Y + "," + (640 - X) + "," + Y + "\r\n";
         }
         return a;
     }
 
-    public static String doubleScroll(List<Note> list) {
+    public static String doubleScroll(List<Note> list, int X, int Y) {
         int noteCount = list.size();
         String a = "";
         for (int i = 0; i < noteCount; i++) {
@@ -176,26 +245,45 @@ public class Mods {
             int hs = n.getHitsound();
             if (((hs >> 1) & 1) == 1 || ((hs >> 3) & 1) == 1) {
                 a += "Sprite,Foreground,Centre,\"SB/note.png\",320,240\r\n ";
-                a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",170,-260,170,370\r\n ";
-                a += "S,0," + n.getMillis() + ",,0.35\r\n";
-                a += " C,0," + n.getMillis() + ",,100,160,255\r\n";
-                a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
-                a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",170,-260,170,370\r\n ";
-                a += "S,0," + n.getMillis() + ",,0.35\r\n";
+                a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + "," + X + "," + (Y - 630) + "," + X + "," + Y + "\r\n ";
+                if (((hs >> 2) & 1) == 0) {
+                    a += "S,0," + n.getMillis() + ",,0.35\r\n ";
+                } else {
+                    a += "S,0," + n.getMillis() + ",,0.5\r\n ";
+                }
+                a += "C,0," + n.getMillis() + ",,100,160,255\r\n";
+
+                if (((hs >> 2) & 1) == 0) {
+                    a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
+                    a += "S,0," + n.getMillis() + ",,0.35\r\n ";
+                } else {
+                    a += "Sprite,Foreground,Centre,\"SB/notebig-overlay.png\",320,240\r\n ";
+                    a += "S,0," + n.getMillis() + ",,0.5\r\n ";
+                }
+                a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + "," + X + "," + (Y - 630) + "," + X + "," + Y + "\r\n";
             } else {
                 a += "Sprite,Foreground,Centre,\"SB/note.png\",320,240\r\n ";
-                a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",800,370,170,370\r\n ";
-                a += "S,0," + n.getMillis() + ",,0.35\r\n";
-                a += " C,0," + n.getMillis() + ",,255,80,80\r\n";
-                a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
-                a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",800,370,170,370\r\n ";
-                a += "S,0," + n.getMillis() + ",,0.35\r\n";
+                a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + "," + (X + 630) + "," + Y + "," + X + "," + Y + "\r\n ";
+                if (((hs >> 2) & 1) == 0) {
+                    a += "S,0," + n.getMillis() + ",,0.35\r\n ";
+                } else {
+                    a += "S,0," + n.getMillis() + ",,0.5\r\n ";
+                }
+                a += "C,0," + n.getMillis() + ",,255,80,80\r\n";
+                if (((hs >> 2) & 1) == 0) {
+                    a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
+                    a += "S,0," + n.getMillis() + ",,0.35\r\n ";
+                } else {
+                    a += "Sprite,Foreground,Centre,\"SB/notebig-overlay.png\",320,240\r\n ";
+                    a += "S,0," + n.getMillis() + ",,0.5\r\n ";
+                };
+                a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + "," + (X + 630) + "," + Y + "," + X + "," + Y + "\r\n";
             }
         }
         return a;
     }
 
-    private static String colorStar(int hs, Note n) {
+    private static String colorStar(int hs, Note n, int X, int Y) {
         String a = "";
         if (((hs >> 1) & 1) == 1 || ((hs >> 3) & 1) == 1) {
             a += " C,0," + n.getMillis() + ",,100,160,255\r\n";
@@ -216,7 +304,7 @@ public class Mods {
         return a;
     }
 
-    public static String starMode(List<Note> list) {
+    public static String starMode(List<Note> list, int X, int Y) {
         int noteCount = list.size();
         String a = "";
         for (int i = 0; i < noteCount; i++) {
@@ -228,7 +316,7 @@ public class Mods {
                     a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 5)) + "," + n.getMillis() + ",800,370,320,370\r\n ";
                     //a += hide(n.getMillis() - (long) ((60000 / 191) * 5), 246181);
                     a += "S,0," + n.getMillis() + ",,0.35\r\n";
-                    a += colorStar(hs, n);
+                    a += colorStar(hs, n, X, Y);
                     a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
                     a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 5)) + "," + n.getMillis() + ",800,370,320,370\r\n ";
                     //a += hide(n.getMillis() - (long) ((60000 / 191) * 5), 246181);
@@ -240,7 +328,7 @@ public class Mods {
                     //a += hide(n.getMillis() - (long) ((60000 / 191) * 7), 246181);
                     a += "R,0," + n.getMillis() + ",,2.35619449019\r\n ";
                     a += "S,0," + n.getMillis() + ",,0.35\r\n";
-                    a += colorStar(hs, n);
+                    a += colorStar(hs, n, X, Y);
                     a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
                     a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 7)) + "," + n.getMillis() + ",659,75,320,370\r\n ";
                     //a += hide(n.getMillis() - (long) ((60000 / 191) * 7), 246181);
@@ -253,7 +341,7 @@ public class Mods {
                     //a += hide(n.getMillis() - (long) ((60000 / 191) * 5), 246181);
                     a += "R,0," + n.getMillis() + ",,1.57079632679\r\n ";
                     a += "S,0," + n.getMillis() + ",,0.35\r\n";
-                    a += colorStar(hs, n);
+                    a += colorStar(hs, n, X, Y);
                     a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
                     //a += hide(n.getMillis() - (long) ((60000 / 191) * 5), 246181);
                     a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 5)) + "," + n.getMillis() + ",320,75,320,370\r\n ";
@@ -266,7 +354,7 @@ public class Mods {
                     //a += hide(n.getMillis() - (long) ((60000 / 191) * 7), 246181);
                     a += "R,0," + n.getMillis() + ",,0.78539816339\r\n ";
                     a += "S,0," + n.getMillis() + ",,0.35\r\n";
-                    a += colorStar(hs, n);
+                    a += colorStar(hs, n, X, Y);
                     a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
                     //a += hide(n.getMillis() - (long) ((60000 / 191) * 7), 246181);
                     a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 7)) + "," + n.getMillis() + ",-19,75,320,370\r\n ";
@@ -280,7 +368,7 @@ public class Mods {
         return a;
     }
 
-    public static String scroll(List<Note> list, double speed) {
+    public static String scroll(List<Note> list, double speed, int X, int Y) {
         final double TRUC = speed;
         int noteCount = list.size();
         String a = "";
@@ -288,21 +376,30 @@ public class Mods {
             Note n = list.get(i);
             int hs = n.getHitsound();
             a += "Sprite,Foreground,Centre,\"SB/note.png\",320,240\r\n ";
-            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * (4 / TRUC))) + "," + n.getMillis() + ",800,370,170,370\r\n ";
-            a += "S,0," + n.getMillis() + ",,0.35\r\n";
-            if (((hs >> 1) & 1) == 1 || ((hs >> 3) & 1) == 1) {
-                a += " C,0," + n.getMillis() + ",,100,160,255\r\n";
+            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * (4 / TRUC))) + "," + n.getMillis() + "," + (X + 630) + "," + Y + "," + X + "," + Y + "\r\n ";
+            if (((hs >> 2) & 1) == 0) {
+                a += "S,0," + n.getMillis() + ",,0.35\r\n ";
             } else {
-                a += " C,0," + n.getMillis() + ",,255,80,80\r\n";
+                a += "S,0," + n.getMillis() + ",,0.5\r\n ";
             }
-            a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
-            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * (4 / TRUC))) + "," + n.getMillis() + ",800,370,170,370\r\n ";
-            a += "S,0," + n.getMillis() + ",,0.35\r\n";
+            if (((hs >> 1) & 1) == 1 || ((hs >> 3) & 1) == 1) {
+                a += "C,0," + n.getMillis() + ",,100,160,255\r\n";
+            } else {
+                a += "C,0," + n.getMillis() + ",,255,80,80\r\n";
+            }
+            if (((hs >> 2) & 1) == 0) {
+                a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
+                a += "S,0," + n.getMillis() + ",,0.35\r\n ";
+            } else {
+                a += "Sprite,Foreground,Centre,\"SB/notebig-overlay.png\",320,240\r\n ";
+                a += "S,0," + n.getMillis() + ",,0.5\r\n ";
+            }
+            a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * (4 / TRUC))) + "," + n.getMillis() + "," + (X + 630) + "," + Y + "," + X + "," + Y + "\r\n";
         }
         return a;
     }
 
-    public static String splitScroll(List<Note> list) {
+    public static String splitScroll(List<Note> list, int X, int Y) {
         int noteCount = list.size();
         String a = "";
         for (int i = 0; i < noteCount; i++) {
@@ -310,26 +407,45 @@ public class Mods {
             int hs = n.getHitsound();
             if (((hs >> 1) & 1) == 1 || ((hs >> 3) & 1) == 1) {
                 a += "Sprite,Foreground,Centre,\"SB/note.png\",320,240\r\n ";
-                a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",720,370,320,370\r\n ";
-                a += "S,0," + n.getMillis() + ",,0.35\r\n";
-                a += " C,0," + n.getMillis() + ",,100,160,255\r\n";
-                a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
-                a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",720,370,320,370\r\n ";
-                a += "S,0," + n.getMillis() + ",,0.35\r\n";
+                a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",720," + Y + ",320," + Y + "\r\n ";
+                if (((hs >> 2) & 1) == 0) {
+                    a += "S,0," + n.getMillis() + ",,0.35\r\n ";
+                } else {
+                    a += "S,0," + n.getMillis() + ",,0.5\r\n ";
+                }
+                a += "C,0," + n.getMillis() + ",,100,160,255\r\n";
+                if (((hs >> 2) & 1) == 0) {
+                    a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
+                    a += "S,0," + n.getMillis() + ",,0.35\r\n ";
+                } else {
+                    a += "Sprite,Foreground,Centre,\"SB/notebig-overlay.png\",320,240\r\n ";
+                    a += "S,0," + n.getMillis() + ",,0.5\r\n ";
+                }
+                a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",720," + Y + ",320," + Y + "\r\n";
             } else {
                 a += "Sprite,Foreground,Centre,\"SB/note.png\",320,240\r\n ";
-                a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",-80,370,320,370\r\n ";
-                a += "S,0," + n.getMillis() + ",,0.35\r\n";
-                a += " C,0," + n.getMillis() + ",,255,80,80\r\n";
-                a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
-                a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",-80,370,320,370\r\n ";
-                a += "S,0," + n.getMillis() + ",,0.35\r\n";
+                a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",-80," + Y + ",320," + Y + "\r\n ";
+                if (((hs >> 2) & 1) == 0) {
+                    a += "S,0," + n.getMillis() + ",,0.35\r\n ";
+                } else {
+                    a += "S,0," + n.getMillis() + ",,0.5\r\n ";
+                }
+                a += "C,0," + n.getMillis() + ",,255,80,80\r\n";
+
+                if (((hs >> 2) & 1) == 0) {
+                    a += "Sprite,Foreground,Centre,\"SB/note-overlay.png\",320,240\r\n ";
+                    a += "S,0," + n.getMillis() + ",,0.35\r\n ";
+                } else {
+                    a += "Sprite,Foreground,Centre,\"SB/notebig-overlay.png\",320,240\r\n ";
+                    a += "S,0," + n.getMillis() + ",,0.5\r\n ";
+                }
+                a += "M,0," + (n.getMillis() - (int) ((60000 / 191) * 4)) + "," + n.getMillis() + ",-80," + Y + ",320," + Y + "\r\n";
             }
         }
         return a;
     }
 
-    public static String counter(List<Note> list) {
+    public static String counter(List<Note> list, int X, int Y) {
         Collections.reverse(list);
         int noteCount = list.size();
         String nc = String.valueOf(noteCount);
@@ -394,7 +510,7 @@ public class Mods {
         return a;
     }
 
-    public static String counterMirror(List<Note> list) {
+    public static String counterMirror(List<Note> list, int X, int Y) {
         Collections.reverse(list);
         int noteCount = list.size();
         String nc = String.valueOf(noteCount);
@@ -459,7 +575,7 @@ public class Mods {
         return a;
     }
 
-    public static String counterUpside(List<Note> list) {
+    public static String counterUpside(List<Note> list, int X, int Y) {
         Collections.reverse(list);
         int noteCount = list.size();
         String nc = String.valueOf(noteCount);
@@ -524,7 +640,7 @@ public class Mods {
         return a;
     }
 
-    public static String counterReverse(List<Note> list) {
+    public static String counterReverse(List<Note> list, int X, int Y) {
         Collections.reverse(list);
         int noteCount = list.size();
         String nc = String.valueOf(noteCount);

@@ -34,9 +34,19 @@ public interface FolderUtils {
     public static boolean checkForFolder(File folder) {
         if (!folder.exists()) {
             folder.mkdir();
-            System.out.println("Directory ./osuMaps/ created.\n"
-                    + "Place all the files in the folder and restart the program.\n");
             return true;
+        }
+        return false;
+    }
+    
+    public static boolean checkForFile(File file){
+        if(!file.exists()){
+            try{
+                file.createNewFile();
+                return true;
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            } 
         }
         return false;
     }

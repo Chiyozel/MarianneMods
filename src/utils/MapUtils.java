@@ -29,6 +29,7 @@ public class MapUtils {
     protected File f;
     protected String filePath;
     protected File folder;
+    protected File settings;
     protected boolean isNewFile;
     protected CopyOnWriteArrayList<Note> notes;
     protected int startTime;
@@ -225,6 +226,35 @@ public class MapUtils {
 
             /* something */
             System.out.println("Notes added to " + newChart.getName() + ".");
+
+        } catch (IOException ex) {
+            Logger.getLogger(MapUtils.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    protected void createSettings(File file) {
+
+        try {
+            /* These objects are here to write the file to "Notes.osu" from
+             the first to last note in the ArrayList.            
+             */
+            FileWriter fw = new FileWriter(file, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+
+            /* For each note in the list, append it to the file.
+             Output the addition of the note to the console because why not?
+             */
+            /* Close the file (better....) */
+            
+            pw.append("// Enter the coordinates of the target circle in the storyboard here.");
+            bw.newLine();
+            pw.append("X=170");
+            bw.newLine();
+            pw.append("Y=370");
+            bw.newLine();
+            pw.close();
 
         } catch (IOException ex) {
             Logger.getLogger(MapUtils.class

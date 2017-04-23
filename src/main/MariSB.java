@@ -29,6 +29,7 @@ public class MariSB extends MapUtils implements FolderUtils {
 
     public int X;
     public int Y;
+    private float scrollbpm;
 
     public MariSB() {
 
@@ -170,6 +171,9 @@ public class MariSB extends MapUtils implements FolderUtils {
                 }
             }
 
+            System.out.println("Scroll Speed (in BPM):");
+            scrollbpm = sc.nextFloat();
+
             System.out.println(
                     "What do you want to do?\n"
                     + "\t(Everything there has been used for MariannE 2015 and 2016)\n"
@@ -188,6 +192,10 @@ public class MariSB extends MapUtils implements FolderUtils {
                     + "13.\tNote Counter (Left side, upside down)\n"
                     + "14.\tUpside Down\n"
                     + "15.\t4 Star Mode\n"
+                    + "16.\tVertical Wave (EXPERIMENTAL, LONG PROCESS)\n"
+                    + "17.\tDouble Wave (EXPERIMENTAL, LONG PROCESS)\n"
+                    + "18-24.\tToo lazy to add for now"
+                    + "25.\tIt doesn't exist yet but it's gonna be some good stop shit"
             );
             type = sc.nextInt();
 
@@ -202,45 +210,108 @@ public class MariSB extends MapUtils implements FolderUtils {
                     out = Mods.counterMirror(notes, X, Y);
                     break;
                 case 4:
-                    out = Mods.doubleScroll(notes, X, Y);
+                    out = Mods.doubleScroll(notes, X, Y, scrollbpm);
                     break;
                 case 5:
-                    out = Mods.gravity(notes, X, Y);
+                    out = Mods.gravity(notes, X, Y, scrollbpm);
                     break;
                 case 6:
-                    out = Mods.abekobe(notes, X, Y);
+                    out = Mods.abekobe(notes, X, Y, scrollbpm);
                     break;
                 case 7:
-                    out = Mods.abekobeReverse(notes, X, Y);
+                    out = Mods.abekobeReverse(notes, X, Y, scrollbpm);
                     break;
                 case 8:
-                    out = Mods.reverseScroll(notes, X, Y);
+                    out = Mods.reverseScroll(notes, X, Y, scrollbpm);
                     break;
                 case 9:
-                    out = Mods.splitScroll(notes, X, Y);
+                    out = Mods.splitScroll(notes, X, Y, scrollbpm);
                     break;
                 case 10:
                     System.out.println("------------\nAt which speed do you want it to go?");
                     double speed = sc.nextDouble();
-                    if (speed <= 0) {
+                    if (speed < 0) {
                         speed = 1.;
                     }
-                    out = Mods.scroll(notes, speed, X, Y);
+                    out = Mods.scroll(notes, speed, X, Y, scrollbpm);
                     break;
                 case 11:
-                    out = Mods.upsideDownAbek(notes, X, Y);
+                    out = Mods.upsideDownAbek(notes, X, Y, scrollbpm);
                     break;
                 case 12:
-                    out = Mods.boost(notes, X, Y);
+                    out = Mods.boost(notes, X, Y, scrollbpm);
                     break;
                 case 13:
                     out = Mods.counterUpside(notes, X, Y);
                     break;
                 case 14:
-                    out = Mods.upsideDown(notes, X, Y);
+                    out = Mods.upsideDown(notes, X, Y, scrollbpm);
                     break;
                 case 15:
-                    out = Mods.starMode(notes, X, Y);
+                    out = Mods.starMode(notes, X, Y, scrollbpm);
+                    break;
+                case 16:
+                    System.out.println("------------\nHow intense should the wave be? 1.00 = 25 pixels");
+                    float intensity = sc.nextFloat();
+
+                    System.out.println("------------\nHow many periods do you want?");
+                    int periods = sc.nextInt();
+
+                    out = Mods.vertWave(notes, X, Y, scrollbpm, intensity, periods);
+                    break;
+                case 17:
+                    System.out.println("------------\nHow intense should the wave be? 1.00 = 25 pixels");
+                    intensity = sc.nextFloat();
+
+                    System.out.println("------------\nHow many periods do you want?");
+                    periods = sc.nextInt();
+
+                    out = Mods.doubleWave(notes, X, Y, scrollbpm, intensity, periods);
+                    break;
+                case 18:
+                    out = Mods.confusion(notes, X, Y, scrollbpm);
+                    break;
+                case 19:
+                    System.out.println("------------\nHow intense should the wave be? 1.00 = 25 pixels");
+                    intensity = sc.nextFloat();
+
+                    System.out.println("------------\nHow many periods do you want?");
+                    periods = sc.nextInt();
+
+                    out = Mods.confusionWave(notes, X, Y, scrollbpm, intensity, periods);
+                    break;
+                case 20:
+                    System.out.println("------------\nHow intense should the wave be? 1.00 = 25 pixels");
+                    intensity = sc.nextFloat();
+
+                    System.out.println("------------\nHow many periods do you want?");
+                    periods = sc.nextInt();
+
+                    out = Mods.theBestThingEver(notes, X, Y, scrollbpm, intensity, periods);
+                    break;
+                case 21:
+                    System.out.println("------------\nHow intense should the wave be? 1.00 = 25 pixels");
+                    intensity = sc.nextFloat();
+
+                    System.out.println("------------\nHow many periods do you want?");
+                    periods = sc.nextInt();
+
+                    out = Mods.vertWave2(notes, X, Y, scrollbpm, intensity, periods);
+                    break;
+                case 22:
+                    System.out.println("------------\nHow intense should the wave be? 1.00 = 25 pixels");
+                    intensity = sc.nextFloat();
+
+                    System.out.println("------------\nHow many periods do you want?");
+                    periods = sc.nextInt();
+
+                    out = Mods.doubleWave2(notes, X, Y, scrollbpm, intensity, periods);
+                    break;
+                case 23:
+                    out = Mods.newFlashlight(notes, X, Y, scrollbpm);
+                    break;
+                case 24:
+                    out = Mods.reverse2(notes, X, Y, scrollbpm);
                     break;
                 default:
                     System.out.println("Wrong choice.");
@@ -250,7 +321,7 @@ public class MariSB extends MapUtils implements FolderUtils {
              the notes from the original map will end up in the compilation.
              So, the user must key in his desired spot for the first note.
              */
-            /* And then, the file is outputted.*/
+ /* And then, the file is outputted.*/
             this.createFile(out);
         }
     }
